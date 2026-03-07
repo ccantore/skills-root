@@ -1,6 +1,8 @@
 .DS_Store
-jambro-beamer-setup/
-notes-to-beamer-sections/
-notes-to-slides-diff/
-pdf-to-md/
-tex-exercises-from-notes/
+
+# Ignore all nested skill repos by default.
+*/
+
+# Keep only the shared parent sync assets tracked here.
+!.gitignore
+!sync_skills.sh
