@@ -1,0 +1,4 @@
+interface:
+  display_name: "Jambro Beamer Setup"
+  short_description: "Set up Jambro Beamer presentation scaffolds"
+  default_prompt: "Use $jambro-beamer-setup to scaffold a new Jambro Beamer presentation."

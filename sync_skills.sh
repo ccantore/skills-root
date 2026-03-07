@@ -1,16 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="/Users/cristiano/Documents/GitHub/skills"
-CODEX_DIR="/Users/cristiano/.codex/skills"
-CURSOR_DIR="/Users/cristiano/.cursor/skills"
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:${PATH:-}"
+shopt -s nullglob
+
+SCRIPT_PATH="${BASH_SOURCE[0]}"
+SCRIPT_DIR="${SCRIPT_PATH%/*}"
+if [[ "$SCRIPT_DIR" == "$SCRIPT_PATH" ]]; then
+  SCRIPT_DIR="."
+fi
+
+REPO="$(cd -- "$SCRIPT_DIR" && pwd -P)"
+CODEX_DIR="${HOME}/.codex/skills"
+CURSOR_DIR="${HOME}/.cursor/skills"
 
 usage() {
-  cat <<'USAGE'
-Usage: sync_skills.sh [--pull|--pull-all]
-  --pull      Pull the root skills repo before syncing.
-  --pull-all  Pull the root skills repo and pull nested skill repos (child dirs with .git).
-USAGE
+  printf '%s\n' \
+    'Usage: sync_skills.sh [--pull|--pull-all]' \
+    '  --pull      Pull the repo-local skills tree before syncing.' \
+    '  --pull-all  Pull the repo-local skills tree and nested skill repos (child dirs with .git).'
 }
 
 sync_one_target() {
@@ -33,6 +41,13 @@ sync_one_target() {
 
 DO_PULL_ROOT=false
 DO_PULL_NESTED=false
+
+skill_dirs=()
+for d in "$REPO"/*; do
+  [[ -d "$d" ]] || continue
+  [[ "${d##*/}" == ".git" ]] && continue
+  skill_dirs+=("$d")
+done
 
 case "${1:-}" in
   "") ;;
@@ -58,17 +73,17 @@ if $DO_PULL_ROOT; then
 fi
 
 if $DO_PULL_NESTED; then
-  while IFS= read -r d; do
+  for d in "${skill_dirs[@]}"; do
     if [[ -d "$d/.git" ]] && git -C "$d" remote get-url origin >/dev/null 2>&1; then
       git -C "$d" pull --ff-only
     fi
-  done < <(find "$REPO" -mindepth 1 -maxdepth 1 -type d ! -name .git | sort)
+  done
 fi
 
 mkdir -p "$CODEX_DIR" "$CURSOR_DIR"
 
 synced=0
-while IFS= read -r src; do
+for src in "${skill_dirs[@]}"; do
   [[ -f "$src/SKILL.md" ]] || continue
 
   name="$(basename "$src")"
@@ -79,6 +94,6 @@ while IFS= read -r src; do
   sync_one_target "$src" "$cursor_dst"
 
   synced=$((synced + 1))
-done < <(find "$REPO" -mindepth 1 -maxdepth 1 -type d ! -name .git | sort)
+done
 
 echo "Synced $synced skills to Codex ($CODEX_DIR) and Cursor ($CURSOR_DIR)."
