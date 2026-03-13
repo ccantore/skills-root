@@ -5,4 +5,5 @@
 
 # Keep only the shared parent sync assets tracked here.
 !.gitignore
+!bootstrap_skills.sh
 !sync_skills.sh
