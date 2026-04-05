@@ -7,3 +7,9 @@
 !.gitignore
 !bootstrap_skills.sh
 !sync_skills.sh
+!review-paper-full/
+!review-paper-full/**
+!review-paper-light/
+!review-paper-light/**
+!review-paper-code/
+!review-paper-code/**
