@@ -7,9 +7,7 @@
 !.gitignore
 !bootstrap_skills.sh
 !sync_skills.sh
-!review-paper-full/
-!review-paper-full/**
-!review-paper-light/
-!review-paper-light/**
-!review-paper-code/
-!review-paper-code/**
+
+=======
+*.pre-skills-root-backup-20260307115932
+>>>>>>> c3c7080b3070444186e42ce3dae97ad6dd525190
