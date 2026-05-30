@@ -15,7 +15,7 @@ SYNC_SCRIPT="$REPO/sync_skills.sh"
 usage() {
   printf '%s\n' \
     'Usage: bootstrap_skills.sh [--pull]' \
-    '  Clone missing nested skill repos, including external sparse-checkout skills.' \
+    '  Clone missing nested skill repos, apply local skill patches, and sync.' \
     '  --pull  Also fast-forward existing nested repos before syncing.'
 }
 
