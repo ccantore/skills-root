@@ -1,0 +1,4 @@
+interface:
+  display_name: "ADB Opportunity Matcher"
+  short_description: "Match new ADB notices against your current CV"
+  default_prompt: "Use $match-adb-consulting-opportunities to review new ADB consulting notices against my current CV."

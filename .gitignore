@@ -7,6 +7,9 @@
 !.gitignore
 !bootstrap_skills.sh
 !sync_skills.sh
+!match-adb-consulting-opportunities/
+!match-adb-consulting-opportunities/**
+match-adb-consulting-opportunities/**/__pycache__/
 
 =======
 *.pre-skills-root-backup-20260307115932
