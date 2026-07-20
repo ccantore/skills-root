@@ -9,9 +9,7 @@ Assess newly advertised ADB consulting opportunities and produce a short, eviden
 
 ## Fixed Inputs
 
-- CV relative path on both machines: `Documents/GitHub/website/static/files/cv_cantore.tex`
-- CV path on the primary Mac: `/Users/cristiano/EcoDir Dropbox/Cristiano Cantore/My Mac (Cristiano’s MacBook Pro)/Documents/GitHub/website/static/files/cv_cantore.tex`
-- CV path on the second Mac: `/Users/cristiano/EcoDir Dropbox/Cristiano Cantore/Mac (2)/Documents/GitHub/website/static/files/cv_cantore.tex`
+- CV path on this MacBook Pro: `/Users/cristiano/EcoDir Dropbox/Cristiano Cantore/My Mac (Cristiano’s MacBook Pro)/Documents/GitHub/website/static/files/cv_cantore.tex`
 - Gmail query: `from:noreply@adb.org subject:(CMS Consulting Services Recruitment Notice) -in:spam -in:trash`
 - State helper: `scripts/message_state.py`
 - State file: `~/.codex/state/adb-opportunity-matcher.json`
@@ -27,7 +25,7 @@ Assess newly advertised ADB consulting opportunities and produce a short, eviden
    ```
 
    Continue only when the result is `new`. If there are no new messages, report that briefly and stop without opening the CV.
-3. Resolve the CV before reading it. Check the two machine-specific paths above, keeping the one that exists and is a non-empty readable TeX source file on the current Mac. If neither absolute path is usable, search the synced Dropbox folders for the exact relative path `Documents/GitHub/website/static/files/cv_cantore.tex` and validate the candidate. Do not substitute a CV from `applications/CV` or another location.
+3. Resolve the CV before reading it. Always use `/Users/cristiano/EcoDir Dropbox/Cristiano Cantore/My Mac (Cristiano’s MacBook Pro)/Documents/GitHub/website/static/files/cv_cantore.tex`. Confirm that it exists and is a non-empty readable TeX source file. If it is unavailable, report that exact path as the blocker; do not search for or substitute a CV from another location.
 4. Read the resolved `.tex` source directly from the local filesystem. Do not use Finder, a text-editor UI, Computer Use, or an upload/attachment workflow:
    - Read the complete source, including every section and included CV content. Follow `\input` or `\include` references recursively when present rather than treating the top-level file alone as complete.
    - Build a fresh profile of education, positions, years of experience, research fields, consulting projects, institutional work, methods, software, languages, citizenships, and regional experience.
