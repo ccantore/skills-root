@@ -62,17 +62,14 @@ skill_urls=(
 )
 
 external_skill_names=(
-  "handwritten-exam-pdf-to-markdown"
   "pdf-reading"
 )
 
 external_skill_urls=(
-  "https://github.com/ccantore/macroeconomic-theories-policies.git"
   "https://github.com/aniketpanjwani/skills.git"
 )
 
 external_skill_paths=(
-  "skills/handwritten-exam-pdf-to-markdown"
   "skills/general/pdf-reading"
 )
 

@@ -9,6 +9,8 @@
 !sync_skills.sh
 !match-adb-consulting-opportunities/
 !match-adb-consulting-opportunities/**
+!handwritten-exam-pdf-to-markdown/
+!handwritten-exam-pdf-to-markdown/**
 match-adb-consulting-opportunities/**/__pycache__/
 
 =======

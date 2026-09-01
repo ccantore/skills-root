@@ -1,0 +1,4 @@
+interface:
+  display_name: "Handwritten Exam PDF to Markdown"
+  short_description: "Convert handwritten exam PDFs to Markdown."
+  default_prompt: "Use $handwritten-exam-pdf-to-markdown to convert handwritten exam PDFs in a folder into Markdown transcripts with page images, an index, and a review checklist."
