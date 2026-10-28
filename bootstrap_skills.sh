@@ -73,6 +73,20 @@ external_skill_paths=(
   "skills/general/pdf-reading"
 )
 
+external_bundle_names=(
+  "research_skills"
+)
+
+external_bundle_urls=(
+  "https://github.com/isitcredible/research_skills.git"
+)
+
+external_bundle_paths=(
+  "audit-review"
+  "review-digest"
+  "review"
+)
+
 cloned=0
 updated=0
 skipped=0
@@ -139,6 +153,39 @@ bootstrap_external_skill() {
   external_cloned=$((external_cloned + 1))
 }
 
+bootstrap_external_bundle() {
+  local name="$1"
+  local repo_url="$2"
+  shift 2
+  local dst="$REPO/$name"
+
+  if [[ -d "$dst/.git" ]]; then
+    current_origin="$(git -C "$dst" remote get-url origin 2>/dev/null || true)"
+    if [[ "$current_origin" != "$repo_url" ]]; then
+      printf 'Skipping %s: origin mismatch (%s)\n' "$name" "${current_origin:-missing}"
+      skipped=$((skipped + 1))
+      return
+    fi
+
+    git -C "$dst" sparse-checkout set --no-cone "$@"
+    if $DO_PULL; then
+      git -C "$dst" pull --ff-only
+      external_updated=$((external_updated + 1))
+    fi
+    return
+  fi
+
+  if [[ -e "$dst" ]]; then
+    printf 'Skipping %s: path exists but is not a git repo\n' "$name"
+    skipped=$((skipped + 1))
+    return
+  fi
+
+  git clone --filter=blob:none --sparse "$repo_url" "$dst"
+  git -C "$dst" sparse-checkout set --no-cone "$@"
+  external_cloned=$((external_cloned + 1))
+}
+
 for i in "${!skill_names[@]}"; do
   name="${skill_names[$i]}"
   url="${skill_urls[$i]}"
@@ -174,6 +221,13 @@ for i in "${!external_skill_names[@]}"; do
     "${external_skill_names[$i]}" \
     "${external_skill_urls[$i]}" \
     "${external_skill_paths[$i]}"
+done
+
+for i in "${!external_bundle_names[@]}"; do
+  bootstrap_external_bundle \
+    "${external_bundle_names[$i]}" \
+    "${external_bundle_urls[$i]}" \
+    "${external_bundle_paths[@]}"
 done
 
 "$SYNC_SCRIPT"

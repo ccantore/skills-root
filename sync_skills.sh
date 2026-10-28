@@ -100,6 +100,18 @@ for d in "$REPO"/*; do
   skill_dirs+=("$d")
 done
 
+# The research-skills repository is checked out as a nested sparse clone by
+# bootstrap_skills.sh. Sync its skills as siblings so their cross-skill paths
+# (for example, audit-review calling review scripts) resolve correctly.
+for d in \
+  "$REPO/research_skills/audit-review" \
+  "$REPO/research_skills/review-digest" \
+  "$REPO/research_skills/review" \
+  "$REPO/research_skills/review-digest/ai-sweep"; do
+  [[ -d "$d" ]] || continue
+  skill_dirs+=("$d")
+done
+
 case "${1:-}" in
   "") ;;
   --pull)
